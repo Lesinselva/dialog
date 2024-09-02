@@ -1,5 +1,3 @@
-library custom_dialog;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,14 +8,14 @@ class CustomDialog extends StatefulWidget {
   final TextEditingController? secondFieldController;
   final IconData? icon;
   final Color? iconColor;
-  final IconData secicon;
+  final IconData? secicon;
   final int maxLength;
   final String firstButtonLabel;
   final Color firstButtonColor;
   final IconData firstButtonIcon;
   final Color? firstButtonIconColor;
   final Color? firstButtonTextColor;
-  final VoidCallback firstButtonAction;
+  final Function(String) firstButtonAction;
   final String secondButtonLabel;
   final Color secondButtonColor;
   final IconData secondButtonIcon;
@@ -34,7 +32,7 @@ class CustomDialog extends StatefulWidget {
     this.secondFieldController,
     this.icon,
     this.iconColor,
-    required this.secicon,
+    this.secicon,
     required this.maxLength,
     required this.firstButtonLabel,
     required this.firstButtonColor,
@@ -93,7 +91,7 @@ class CustomDialogState extends State<CustomDialog> {
       if (widget.secondFieldController!.text.isEmpty ||
           double.tryParse(widget.secondFieldController!.text) == null) {
         setState(() {
-          secondFieldErrorMessage = 'Enter a valid amount    ';
+          secondFieldErrorMessage = 'Enter a valid amount';
         });
         hasError = true;
       } else {
@@ -104,7 +102,7 @@ class CustomDialogState extends State<CustomDialog> {
     }
 
     if (!hasError) {
-      widget.firstButtonAction();
+      widget.firstButtonAction(widget.firstFieldController.text);
     }
   }
 
