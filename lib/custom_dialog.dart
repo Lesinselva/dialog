@@ -1,52 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomDialog extends StatefulWidget {
   final String title;
-  final String subtitle;
+  final String hintText;
+  final String hintText2;
+
+  final String? subtitle;
   final TextEditingController firstFieldController;
   final TextEditingController? secondFieldController;
-  final IconData? icon;
-  final Color? iconColor;
   final IconData? secicon;
   final int maxLength;
-  final String firstButtonLabel;
+
   final Color firstButtonColor;
   final IconData firstButtonIcon;
   final Color? firstButtonIconColor;
-  final Color? firstButtonTextColor;
   final Function(String) firstButtonAction;
-  final String secondButtonLabel;
+
   final Color secondButtonColor;
   final IconData secondButtonIcon;
   final Color? secondButtonIconColor;
-  final Color? secondButtonTextColor;
   final VoidCallback secondButtonAction;
-  final Gradient titleBackgroundGradient;
+  final Color titleBackgroundColor;
 
   const CustomDialog({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.firstFieldController,
     this.secondFieldController,
-    this.icon,
-    this.iconColor,
     this.secicon,
     required this.maxLength,
-    required this.firstButtonLabel,
     required this.firstButtonColor,
     required this.firstButtonIcon,
     this.firstButtonIconColor,
-    this.firstButtonTextColor,
     required this.firstButtonAction,
-    required this.secondButtonLabel,
     required this.secondButtonColor,
     required this.secondButtonIcon,
     this.secondButtonIconColor,
-    this.secondButtonTextColor,
     required this.secondButtonAction,
-    required this.titleBackgroundGradient,
+    required this.titleBackgroundColor,
+    required this.hintText,
+    required this.hintText2,
   });
 
   @override
@@ -78,7 +74,7 @@ class CustomDialogState extends State<CustomDialog> {
 
     if (widget.firstFieldController.text.isEmpty) {
       setState(() {
-        firstFieldErrorMessage = '${widget.subtitle} cannot be empty';
+        firstFieldErrorMessage = '${widget.hintText} cannot be empty';
       });
       hasError = true;
     } else {
@@ -117,7 +113,7 @@ class CustomDialogState extends State<CustomDialog> {
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: widget.titleBackgroundGradient,
+              color: widget.titleBackgroundColor,
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
             ),
@@ -125,7 +121,12 @@ class CustomDialogState extends State<CustomDialog> {
             child: Center(
               child: Text(
                 widget.title,
-                style: const TextStyle(fontSize: 22),
+                style: GoogleFonts.poppins(
+                  textStyle: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ),
@@ -137,44 +138,37 @@ class CustomDialogState extends State<CustomDialog> {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        if (widget.icon != null)
-                          Icon(
-                            widget.icon,
-                            size: 20,
-                            color: widget.iconColor ?? Colors.black,
-                          ),
-                        const SizedBox(width: 3),
-                        Text(widget.subtitle),
-                      ],
+                if (widget.subtitle != null) ...[
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.subtitle!,
                     ),
-                    Text(
-                      '${widget.firstFieldController.text.length}/${widget.maxLength}',
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  )
+                ],
                 Container(
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 245, 245, 245),
-                    borderRadius: BorderRadius.circular(100),
+                    border:
+                        Border.all(color: const Color(0xFFC5C5C5), width: 1),
+                    borderRadius: BorderRadius.circular(11),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: TextFormField(
                       controller: widget.firstFieldController,
                       maxLength: widget.maxLength,
                       decoration: InputDecoration(
-                        hintText: 'Enter your ${widget.subtitle}',
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 199, 197, 197),
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14,
+                        hintText: widget.hintText,
+                        hintStyle: GoogleFonts.inter(
+                          textStyle: const TextStyle(
+                            color: Color(0xFF454545),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                         border: InputBorder.none,
                         counterText: '',
@@ -196,70 +190,48 @@ class CustomDialogState extends State<CustomDialog> {
                 const SizedBox(height: 16),
                 if (widget.secondFieldController != null)
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.black,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3),
-                                    child: Icon(
-                                      widget.secicon,
-                                      size: 11.5,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 3),
-                                const Text('Selling price'),
-                              ],
-                            ),
-                          ),
-                          Expanded(
                             child: Container(
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 245, 245, 245),
-                                borderRadius: BorderRadius.circular(100),
+                                borderRadius: BorderRadius.circular(11),
+                                border: Border.all(
+                                    color: const Color(0xFFC5C5C5), width: 1),
                               ),
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
                                   children: [
                                     Icon(
                                       widget.secicon,
-                                      size: 17,
-                                      color: Colors.grey,
+                                      size: 15,
+                                      color: const Color(0xFF454545),
                                     ),
                                     const SizedBox(width: 3),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller:
-                                            widget.secondFieldController,
-                                        keyboardType: const TextInputType
-                                            .numberWithOptions(decimal: true),
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp(r'^\d*\.?\d{0,2}')),
-                                        ],
-                                        decoration: const InputDecoration(
-                                          hintText: '0',
-                                          hintStyle: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 199, 197, 197),
-                                            fontWeight: FontWeight.normal,
+                                    TextFormField(
+                                      controller: widget.secondFieldController,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
+                                      inputFormatters: <TextInputFormatter>[
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d*\.?\d{0,2}')),
+                                      ],
+                                      decoration: InputDecoration(
+                                        hintText: widget.hintText2,
+                                        hintStyle: GoogleFonts.inter(
+                                          textStyle: const TextStyle(
+                                            color: Color(0xFF454545),
                                             fontSize: 14,
+                                            fontWeight: FontWeight.w400,
                                           ),
-                                          border: InputBorder.none,
                                         ),
+                                        border: InputBorder.none,
                                       ),
                                     ),
                                   ],
@@ -293,7 +265,7 @@ class CustomDialogState extends State<CustomDialog> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: widget.firstButtonColor,
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(11),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -301,15 +273,7 @@ class CustomDialogState extends State<CustomDialog> {
                               Icon(
                                 widget.firstButtonIcon,
                                 color:
-                                    widget.firstButtonIconColor ?? Colors.black,
-                              ),
-                              const SizedBox(width: 3),
-                              Text(
-                                widget.firstButtonLabel,
-                                style: TextStyle(
-                                  color: widget.firstButtonTextColor ??
-                                      Colors.black,
-                                ),
+                                    widget.firstButtonIconColor ?? Colors.white,
                               ),
                             ],
                           ),
@@ -324,7 +288,7 @@ class CustomDialogState extends State<CustomDialog> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           decoration: BoxDecoration(
                             color: widget.secondButtonColor,
-                            borderRadius: BorderRadius.circular(100),
+                            borderRadius: BorderRadius.circular(11),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -332,15 +296,7 @@ class CustomDialogState extends State<CustomDialog> {
                               Icon(
                                 widget.secondButtonIcon,
                                 color: widget.secondButtonIconColor ??
-                                    Colors.black,
-                              ),
-                              const SizedBox(width: 3),
-                              Text(
-                                widget.secondButtonLabel,
-                                style: TextStyle(
-                                  color: widget.secondButtonTextColor ??
-                                      Colors.black,
-                                ),
+                                    Colors.white,
                               ),
                             ],
                           ),
