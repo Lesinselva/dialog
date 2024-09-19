@@ -57,11 +57,17 @@ class CustomDialogState extends State<CustomDialog> {
   void initState() {
     super.initState();
     widget.firstFieldController.addListener(_updateCharacterCount);
+    if (widget.secondFieldController != null) {
+      widget.secondFieldController!.addListener(_updateCharacterCount);
+    }
   }
 
   @override
   void dispose() {
     widget.firstFieldController.removeListener(_updateCharacterCount);
+    if (widget.secondFieldController != null) {
+      widget.secondFieldController!.removeListener(_updateCharacterCount);
+    }
     super.dispose();
   }
 
@@ -82,19 +88,17 @@ class CustomDialogState extends State<CustomDialog> {
         firstFieldErrorMessage = null;
       });
     }
-
-    if (widget.secondFieldController != null) {
-      if (widget.secondFieldController!.text.isEmpty ||
-          double.tryParse(widget.secondFieldController!.text) == null) {
-        setState(() {
-          secondFieldErrorMessage = 'Enter a valid amount';
-        });
-        hasError = true;
-      } else {
-        setState(() {
-          secondFieldErrorMessage = null;
-        });
-      }
+    if (widget.secondFieldController != null &&
+        (widget.secondFieldController!.text.isEmpty ||
+            double.tryParse(widget.secondFieldController!.text) == null)) {
+      setState(() {
+        secondFieldErrorMessage = 'Enter a valid amount';
+      });
+      hasError = true;
+    } else {
+      setState(() {
+        secondFieldErrorMessage = null;
+      });
     }
 
     if (!hasError) {
@@ -191,55 +195,50 @@ class CustomDialogState extends State<CustomDialog> {
                 if (widget.secondFieldController != null)
                   Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 245, 245, 245),
-                                borderRadius: BorderRadius.circular(11),
-                                border: Border.all(
-                                    color: const Color(0xFFC5C5C5), width: 1),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 245, 245, 245),
+                          borderRadius: BorderRadius.circular(11),
+                          border: Border.all(
+                              color: const Color(0xFFC5C5C5), width: 1),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                widget.secicon,
+                                size: 15,
+                                color: const Color(0xFF454545),
                               ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      widget.secicon,
-                                      size: 15,
-                                      color: const Color(0xFF454545),
-                                    ),
-                                    const SizedBox(width: 3),
-                                    TextFormField(
-                                      controller: widget.secondFieldController,
-                                      keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                              decimal: true),
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp(r'^\d*\.?\d{0,2}')),
-                                      ],
-                                      decoration: InputDecoration(
-                                        hintText: widget.hintText2,
-                                        hintStyle: GoogleFonts.inter(
-                                          textStyle: const TextStyle(
-                                            color: Color(0xFF454545),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        border: InputBorder.none,
+                              const SizedBox(width: 3),
+                              Expanded(
+                                child: TextFormField(
+                                  controller: widget.secondFieldController,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d{0,2}')),
+                                  ],
+                                  decoration: InputDecoration(
+                                    hintText: widget.hintText2,
+                                    hintStyle: GoogleFonts.inter(
+                                      textStyle: const TextStyle(
+                                        color: Color(0xFF454545),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                  ],
+                                    border: InputBorder.none,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       if (secondFieldErrorMessage != null)
                         Padding(
