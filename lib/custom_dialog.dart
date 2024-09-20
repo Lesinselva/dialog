@@ -226,6 +226,8 @@ class CustomDialogState extends State<CustomDialog> {
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     widget.secicon,
+                                    size: 15,
+                                    color: const Color(0xFF454545),
                                   ),
                                   hintText: widget.hintText2,
                                   hintStyle: GoogleFonts.inter(
