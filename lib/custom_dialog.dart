@@ -153,33 +153,33 @@ class CustomDialogState extends State<CustomDialog> {
                     height: 4,
                   )
                 ],
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 245, 245, 245),
-                    border:
-                        Border.all(color: const Color(0xFFC5C5C5), width: 1),
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: TextFormField(
-                      controller: widget.firstFieldController,
-                      maxLength: widget.maxLength,
-                      decoration: InputDecoration(
-                        hintText: widget.hintText,
-                        hintStyle: GoogleFonts.inter(
-                          textStyle: const TextStyle(
-                            color: Color(0xFF454545),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: const Color.fromARGB(255, 245, 245, 245),
+                //     border:
+                //         Border.all(color: const Color(0xFFC5C5C5), width: 1),
+                //     borderRadius: BorderRadius.circular(11),
+                //   ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: TextFormField(
+                    controller: widget.firstFieldController,
+                    maxLength: widget.maxLength,
+                    decoration: InputDecoration(
+                      hintText: widget.hintText,
+                      hintStyle: GoogleFonts.inter(
+                        textStyle: const TextStyle(
+                          color: Color(0xFF454545),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                         ),
-                        border: InputBorder.none,
-                        counterText: '',
                       ),
+                      border: InputBorder.none,
+                      counterText: '',
                     ),
                   ),
                 ),
+                // ),
                 if (firstFieldErrorMessage != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
@@ -195,51 +195,54 @@ class CustomDialogState extends State<CustomDialog> {
                 if (widget.secondFieldController != null)
                   Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 245, 245, 245),
-                          borderRadius: BorderRadius.circular(11),
-                          border: Border.all(
-                              color: const Color(0xFFC5C5C5), width: 1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                widget.secicon,
-                                size: 15,
-                                color: const Color(0xFF454545),
-                              ),
-                              const SizedBox(width: 3),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: widget.secondFieldController,
-                                  keyboardType:
-                                      const TextInputType.numberWithOptions(
-                                          decimal: true),
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'^\d*\.?\d{0,2}')),
-                                  ],
-                                  decoration: InputDecoration(
-                                    hintText: widget.hintText2,
-                                    hintStyle: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
-                                        color: Color(0xFF454545),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    border: InputBorder.none,
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: const Color.fromARGB(255, 245, 245, 245),
+                      //     borderRadius: BorderRadius.circular(11),
+                      //     border: Border.all(
+                      //         color: const Color(0xFFC5C5C5), width: 1),
+                      //   ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Icon(
+                            //   widget.secicon,
+                            //   size: 15,
+                            //   color: const Color(0xFF454545),
+                            // ),
+                            const SizedBox(width: 3),
+                            Expanded(
+                              child: TextFormField(
+                                controller: widget.secondFieldController,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'^\d*\.?\d{0,2}')),
+                                ],
+                                decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    widget.secicon,
                                   ),
+                                  hintText: widget.hintText2,
+                                  hintStyle: GoogleFonts.inter(
+                                    textStyle: const TextStyle(
+                                      color: Color(0xFF454545),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  border: InputBorder.none,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
+                      //),
                       if (secondFieldErrorMessage != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 8),
