@@ -224,10 +224,13 @@ class CustomDialogState extends State<CustomDialog> {
                                       RegExp(r'^\d*\.?\d{0,2}')),
                                 ],
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(
-                                    widget.secicon,
-                                    size: 15,
-                                    color: const Color(0xFF454545),
+                                  prefixIcon: Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: Icon(
+                                      widget.secicon,
+                                      size: 18,
+                                      color: const Color(0xFF454545),
+                                    ),
                                   ),
                                   hintText: widget.hintText2,
                                   hintStyle: GoogleFonts.inter(
@@ -237,6 +240,9 @@ class CustomDialogState extends State<CustomDialog> {
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
+                                  isDense: true,
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(vertical: 10),
                                   border: InputBorder.none,
                                 ),
                               ),
